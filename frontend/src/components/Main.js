@@ -12,6 +12,7 @@ import Nav from './navbar'
 import Update from './update'
 import OneFormUpdate from './showComponents/formupdate'
 import Register from './register'
+import Login from './Login'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -33,6 +34,7 @@ export default class Main extends Component{
     <Route exact path='/' component={Items}/>   
     <Route  path='/' component={Nav}/>
     <Route exact path='/update/:id' component={OneFormUpdate}/>
+    <Route exat path='/login' component={Login}/>
     <Route exact path='/register' component={Register}/>
     <Route exact path='/create' render={()=><CreateForm/>}/>
     <Route path='/items/:id' component={Show}/>    

@@ -25,6 +25,8 @@ export default class Nav extends Component{
           <li><a href="/create">Create</a></li>
           <li><a href="https://github.com/jonahCodes">Contact</a></li>
           <li><a href="/register">Register</a></li>
+          <li><a href="/login">Login</a></li>
+
 
         </ul>
       </nav>
