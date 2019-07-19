@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default class Login extends Component{
     state={
-        username:'',
+        email:'',
         password:'',
         error:{}
     }
@@ -16,7 +16,7 @@ export default class Login extends Component{
         e.preventDefault();
       
     axios.post('http://localhost:3001/account/login', {
-      username: this.state.username,
+      email:this.state.email,
       password: this.state.password
     })
     .then(response => {
@@ -34,13 +34,13 @@ export default class Login extends Component{
             <form noValidate onSubmit={this.onSubmit}>
               <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
               <div className="form-group">
-                <label htmlFor="email">Username</label>
+                <label htmlFor="email">Email</label>
                 <input
-                  type="username"
+                  type="email"
                   className="form-control"
-                  name="username"
-                  placeholder="Enter username"
-                  value={this.state.username}
+                  name="email"
+                  placeholder="Enter Email"
+                  value={this.state.email}
                   onChange={this.onChange}
                 />
               </div>

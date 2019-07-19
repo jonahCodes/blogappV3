@@ -3,44 +3,54 @@ const users = express.Router();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
-const LocalStragey = require('passport-local');
 const bcrypt = require('bcrypt');
-const User = require('../models/User');
+const config=require('config')
+const User = require('../models/User');    
 
-users.use(cors());
-process.env.SECRET_KEY= 'secret';
+// users.use(cors());
+// process.env.SECRET_KEY= 'secret';
 
 
-users.post('/register',(req,res)=>{
-    var newUser = new User({
+users.post('/register',(req,res,done)=>{ 
     
-        username: req.body.username
-        
-    })
-        User.register(newUser,req.body.password,(err,user)=>{
-            if(err){
-                res.status(404).json({
-                    message:"err:"+ err
-                })
-            }else{
-                 passport.authenticate("local")(req,res,()=>{
-                res.json({message:"success login" + user});
-            });
+    User.findOne({email:req.body.email}).lean().exec((err,email)=>{
+        if(err){
+            return done(err,null)
         }
-           
+        if(email){
+            return res.status(500).json({message:"Email already in use"});
+        }
     })
-})
+    var newUser = new User({username:req.body.username,email:req.body.email});
+    User.register(newUser,req.body.password,function(err,user){
+        if(err){
+                console.log(err);
+               res.send('username or email already taken')
+        }else{
+            passport.authenticate('local')(req,res,function(){
+                res.send().json({
+                    message:"hello" + user.username
+                })
+            })
+         }
+     })
+    })
+  
 
-users.post('/login',passport.authenticate('local',{
+ 
+    users.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/",
+        failureRedirect: "/login"
+    }), function(req, res){
+	   
+});
 
-}),function(req,res){
-res.json({
-  message:'LOGGEDIN'
-  })
-})
+function isLoggedIn(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    return res.json({success:true,redirectUrl:'/'})
+}
 
-users.get('/logout',function(req,res){
-  req.logout();
-  res.send(console.log(req.body.username +' Logged out'))
-})
-  module.exports = users
+  module.exports = users;

@@ -13,6 +13,7 @@ import Update from './update'
 import OneFormUpdate from './showComponents/formupdate'
 import Register from './register'
 import Login from './Login'
+import axios from 'axios'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -29,19 +30,22 @@ export default class Main extends Component{
     return( 
       
       <div>
-    
+   
     <Route exact path='/' component={Home}/>   
     <Route exact path='/' component={Items}/>   
     <Route  path='/' component={Nav}/>
     <Route exact path='/update/:id' component={OneFormUpdate}/>
     <Route exat path='/login' component={Login}/>
     <Route exact path='/register' component={Register}/>
+    {/* <Route exact path='/logout' render={()=>{
+      axios.get('http://localhost:3001/account/login',{})
+    }}/> */}
     <Route exact path='/create' render={()=><CreateForm/>}/>
     <Route path='/items/:id' component={Show}/>    
     <Route path='/' component={Footer}/>
+    </div>
 
-      </div>
-      
+    
     )
   }
 }

@@ -6,11 +6,14 @@ var logger = require('morgan');
 var cors = require('cors');
 var mongoose=require('mongoose');
 var Item = require('./models/postschema');
+var config=require('config');
 var User = require('./models/User');
 var indexRouter = require('./routes/index');
 var UserRouter = require('./routes/Users');
 var LocalStrategy=require('passport-local');
-var passport = require('passport');
+var passport = require('./passports');
+ 
+var db = config.get('URL');
 
 var port = process.env.PORT || 3001;
 
@@ -20,7 +23,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-mongoose.connect("mongodb+srv://jonathanx99x:jonathan2015@cluster0-3psxk.mongodb.net/test?retryWrites=true&w=majority",{ useNewUrlParser: true });
+mongoose.connect(db,{ useNewUrlParser: true, useCreateIndex:true });
 
 app.use(cors());
 app.use(logger('dev'));

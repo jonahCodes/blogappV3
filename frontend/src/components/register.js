@@ -4,8 +4,9 @@ import axios from 'axios'
 
 export default class Register extends Component{
     state = {
-        username:"",
+        email:"",
         password:"",
+        username:""
     }
     
     onChange=(e)=>{
@@ -17,11 +18,15 @@ export default class Register extends Component{
        
   
       axios.post('http://localhost:3001/account/register', {
-      username: this.state.username,
-      password: this.state.password
+      email: this.state.email,
+      password: this.state.password,
+      username:this.state.username
     })
     .then(response => {
-      console.log('registered')
+      console.log('registered', response.data)
+    })
+    .catch(err=>{
+      console.log(err.response);
     })
 }
             
@@ -32,15 +37,27 @@ export default class Register extends Component{
          <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">Register</h1>
-              <div className="form-group">
-                <label htmlFor="username">username address</label>
+            <h1 className='h3 mb-3 font-weight-normal'>Register</h1>
+            <div className="form-group">
+                <label htmlFor="username">Username </label>
                 <input
                   type="username"
                   className="form-control"
                   name="username"
                   placeholder="Enter username"
                   value={this.state.username}
+                  onChange={this.onChange}
+                />
+              </div>
+            
+              <div className="form-group">
+                <label htmlFor="email">email </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Enter Email"
+                  value={this.state.email}
                   onChange={this.onChange}
                 />
               </div>
