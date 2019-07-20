@@ -5,7 +5,11 @@ var itemSchema = new mongoose.Schema({
   description:String,
   image:String,
   author:{ 
-    _id:{type:mongoose.Schema.Types.ObjectId,ref:'User'}
+    id:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User"
+    }
+    
   }
 })
 

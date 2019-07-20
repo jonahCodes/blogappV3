@@ -1,12 +1,12 @@
 const passport = require('passport');
+const User =require('../models/User');
 
 
-//all Stragey
-// const signUpStategy = require('./SignupStrategy');
-const signInStategy = require('./SignInStrategy');
 
+passport.serializeUser(User.serializeUser());
 
-passport.use('local-signin',signInStategy);
-// passport.use('local-signup',signUpStategy);
+   
+passport.deserializeUser(User.deserializeUser());
+
 
 module.exports = passport;

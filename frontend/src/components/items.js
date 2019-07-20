@@ -8,27 +8,27 @@ import Oneitem from './oneitem';
 
 export default class Items extends Component{
     state={
-    item:[]
+    items:[]
   }
   componentDidMount(){
-    axios.get('http://localhost:3001/')
+  axios.get('http://localhost:3001/items')
     .then(res=>{
-      console.log(res);
-      this.setState({item:res.data});
+      console.log(res.data);
+      this.setState({items:res.data});
     })
-  }
-
-
-   render(){
+  } 
   
-const allitems = this.state.item.map(items => {
+   render(){
+    var allitems = this.state.items.map(item => {
         return <Oneitem
-        key={items._id}
-        id={items._id}
-        image={items.image}
-        title={items.description}
+        key={item._id}
+        id={item._id}
+        image={item.image}
+        title={item.description}
         />
     });
+  
+
        return(
             <div>
             {allitems}

@@ -9,8 +9,6 @@ import DisplayShow from './showComponents/displayshow'
 
 class Show extends Component {
  
-  
-
  
     state = {
         show:[],

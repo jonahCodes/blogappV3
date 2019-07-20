@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { register } from './Userfunction';
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
 
 export default class Register extends Component{
     state = {
@@ -28,10 +29,18 @@ export default class Register extends Component{
     .catch(err=>{
       console.log(err.response);
     })
+    this.setState({
+      loading:true
+    })
+    setTimeout(()=>this.setState({loading:false,redirectToReferrer:true}),1000);
 }
             
     
     render(){
+      var redirectToReferrer = this.state.redirectToReferrer;
+      if (redirectToReferrer === true) {
+          return <Redirect to="/"/>
+      }
         return(
             <div className='container'>
          <div className="row">

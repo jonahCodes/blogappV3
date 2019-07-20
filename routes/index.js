@@ -1,28 +1,45 @@
 var express = require('express');
 var Item = require('../models/postschema');
+var User =require('../models/User')
 var mongoose=require('mongoose');
 var router = express.Router();
 
 router.get('/',(req,res,next)=>{
-  Item.find({})
+  User.find({})
+  .exec()
+  .then(result1=>{
+    console.log(result1)
+    if(result1){
+      res.status(200).json(result1)
+    }else{
+      res.status(404).json({message:"cant find USER"})
+    }
+  })
+  
+   
+})
+router.get('/items',function(req,res,next){
+Item.find({})
   .exec()
   .then(result=>{
     console.log(result)
     if(result){
-      res.status(200).json(result)
-    }else{
-      res.status(404).json({message:"cant find anything"})
+      return res.status(200).json(result);
     }
+      return res.status(401).json({jonathan:"cant find ITEM"})
+    
   })
-   
 })
   
 router.post('/',function(req,res){
     const item = new Item({
         _id: new mongoose.Types.ObjectId(),
         description:req.body.description,
-        image:req.body.image
-        
+        image:req.body.image,
+        author:{
+          id: req.user._id,
+          username: req.user.username
+      }
     })
     item.save().then(result =>{
         console.log(result) 
@@ -102,7 +119,7 @@ router.route('/update/:id').post(function(req, res) {
     });
 });
 
-router.delete('/:id',(req,res,next)=>{
+router.delete('/:id',(req,res)=>{
   const id = req.params.id;
   Item.remove({_id:id})
   .exec()
@@ -119,6 +136,6 @@ router.delete('/:id',(req,res,next)=>{
     console.log(err)
     res.status(500).json({error:err})
   }) 
-  res.redirect('http://localhost:3000/');
+  
 })
 module.exports = router;

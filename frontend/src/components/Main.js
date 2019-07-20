@@ -37,9 +37,9 @@ export default class Main extends Component{
     <Route exact path='/update/:id' component={OneFormUpdate}/>
     <Route exat path='/login' component={Login}/>
     <Route exact path='/register' component={Register}/>
-    {/* <Route exact path='/logout' render={()=>{
-      axios.get('http://localhost:3001/account/login',{})
-    }}/> */}
+    <Route exact path='/logout' render={()=>{
+      axios.get('http://localhost:3001/account/logout')
+    }}/>
     <Route exact path='/create' render={()=><CreateForm/>}/>
     <Route path='/items/:id' component={Show}/>    
     <Route path='/' component={Footer}/>
