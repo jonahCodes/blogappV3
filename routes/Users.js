@@ -60,16 +60,11 @@ users.post('/register',(req,res,done)=>{
 
 
 
-    users.get('/logout',verifyToken,(req,res)=>{
-        jwt.verify(req.token, 'secretkey', (err, authData) => {
-            if(err) {
-              res.sendStatus(403);
-            } else {  
+
+    users.get('/logout',passport.authenticate('local'),(req,res)=>{
                     req.logout();
-                    res.status(200).json({message:"Youve been logged out",authData})
-              
-            }
-          });
+                    res.status(200).json({message:"Youve been logged out"})
+            
       
     })
     

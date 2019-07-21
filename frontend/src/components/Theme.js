@@ -5,9 +5,7 @@ import Nav from './navbar'
 
 
 export default class Home extends Component{
-  state={
-
-  }
+  
   render(){
     return(
       <div>

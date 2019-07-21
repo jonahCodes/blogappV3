@@ -24,7 +24,9 @@ export default class Login extends Component{
     })
     .then(response => {
       console.log(response.data)
+      const isAuth = response.data;
       
+      window.localStorage.setItem('isAuth',isAuth)
     })
     .catch(err => {
       console.log(err)
@@ -36,9 +38,14 @@ export default class Login extends Component{
   
     }
     render(){
+      const isAuth = window.localStorage.getItem('isAuth');
+      if(isAuth){
+          return <Redirect to='/'/>
+      }
       var redirectToReferrer = this.state.redirectToReferrer;
       if (redirectToReferrer === true) {
           return <Redirect to="/"/>
+
       }
         return(
             <div className='container'>
